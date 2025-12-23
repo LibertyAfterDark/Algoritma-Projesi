@@ -1,11 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h> 
 
 struct Ogrenci {
     int dogruSayisi;
     int yanlisSayisi;
     int bosSayisi;
-    int net;
+    float net; 
 };
 
 int main(int argc, char *argv[])
@@ -13,6 +14,10 @@ int main(int argc, char *argv[])
     FILE *ogrenciDosya, *anahtarDosya;
     char ogrCevap, dogruCevap;
     struct Ogrenci ogr;
+    
+   
+    char *dosyaAdi; 
+    char *uzanti;
 
     ogr.dogruSayisi = 0;
     ogr.yanlisSayisi = 0;
@@ -25,6 +30,7 @@ int main(int argc, char *argv[])
         return 1;
     }
 
+    
     ogrenciDosya = fopen(argv[1], "r");
     anahtarDosya = fopen(argv[2], "r");
 
@@ -54,13 +60,23 @@ int main(int argc, char *argv[])
     fclose(ogrenciDosya);
     fclose(anahtarDosya);
 
-    ogr.net = ogr.dogruSayisi - (ogr.yanlisSayisi / 4);
+   
+    ogr.net = ogr.dogruSayisi - ((float)ogr.yanlisSayisi / 4);
 
-    printf("%s nolu ogrencinin\n", argv[1]);
+    dosyaAdi = argv[1]; 
+    uzanti = strrchr(dosyaAdi, '.'); // 
+
+    if (uzanti != NULL)
+    {
+        *uzanti = '\0'; //
+    }
+    // -------------------------------------
+
+    printf("%s nolu ogrencinin\n", dosyaAdi); // 
     printf("Dogru sayisi: %d\n", ogr.dogruSayisi);
     printf("Yanlis sayisi: %d\n", ogr.yanlisSayisi);
-    printf("Bos sayisi    : %d\n", ogr.bosSayisi);
-    printf("Net           : %d\n", ogr.net);
+    printf("Bos sayisi : %d\n", ogr.bosSayisi);
+    printf("Net : %.2f\n", ogr.net); // 
 
     return 0;
 }
